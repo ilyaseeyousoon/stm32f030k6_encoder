@@ -36,14 +36,13 @@
 #include "stm32f0xx_it.h"
 
 /* USER CODE BEGIN 0 */
-
+extern uint32_t res[250];
+extern uint32_t m;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern I2C_HandleTypeDef hi2c1;
 extern SPI_HandleTypeDef hspi1;
-extern TIM_HandleTypeDef htim1;
-extern UART_HandleTypeDef huart1;
 
 /******************************************************************************/
 /*            Cortex-M0 Processor Interruption and Exception Handlers         */ 
@@ -72,20 +71,6 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
-* @brief This function handles TIM1 break, update, trigger and commutation interrupts.
-*/
-void TIM1_BRK_UP_TRG_COM_IRQHandler(void)
-{
-  /* USER CODE BEGIN TIM1_BRK_UP_TRG_COM_IRQn 0 */
-
-  /* USER CODE END TIM1_BRK_UP_TRG_COM_IRQn 0 */
-  HAL_TIM_IRQHandler(&htim1);
-  /* USER CODE BEGIN TIM1_BRK_UP_TRG_COM_IRQn 1 */
-
-  /* USER CODE END TIM1_BRK_UP_TRG_COM_IRQn 1 */
-}
-
-/**
 * @brief This function handles I2C1 global interrupt.
 */
 void I2C1_IRQHandler(void)
@@ -109,26 +94,22 @@ void I2C1_IRQHandler(void)
 void SPI1_IRQHandler(void)
 {
   /* USER CODE BEGIN SPI1_IRQn 0 */
-
+	  if(__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) != RESET) {
+		__HAL_SPI_DISABLE_IT(&hspi1, SPI_FLAG_RXNE);
+		
+			res[m] = SPI1->DR; //Читаем то что пришло
+			m=m+1;
+		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);	
+		for(uint32_t t=0;t<1000000;t++);
+		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
+			
+		}
+		
   /* USER CODE END SPI1_IRQn 0 */
-  HAL_SPI_IRQHandler(&hspi1);
+		
   /* USER CODE BEGIN SPI1_IRQn 1 */
-
+__HAL_SPI_ENABLE_IT(&hspi1, SPI_FLAG_RXNE);
   /* USER CODE END SPI1_IRQn 1 */
-}
-
-/**
-* @brief This function handles USART1 global interrupt.
-*/
-void USART1_IRQHandler(void)
-{
-  /* USER CODE BEGIN USART1_IRQn 0 */
-
-  /* USER CODE END USART1_IRQn 0 */
-  HAL_UART_IRQHandler(&huart1);
-  /* USER CODE BEGIN USART1_IRQn 1 */
-
-  /* USER CODE END USART1_IRQn 1 */
 }
 
 /* USER CODE BEGIN 1 */
