@@ -50,7 +50,7 @@
           <OutputName>stm32f030k6 Configuration</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>0</CreateHexFile>
+          <CreateHexFile>1</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath></ListingPath>
@@ -369,7 +369,7 @@
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F030x6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Inc; ..\Drivers\STM32F0xx_HAL_Driver\Inc; ..\Drivers\STM32F0xx_HAL_Driver\Inc\Legacy; ..\Drivers\CMSIS\Include; ..\Drivers\CMSIS\Device\ST\STM32F0xx\Include</IncludePath>
+              <IncludePath>..\Inc;    ..\Drivers\STM32F0xx_HAL_Driver\Inc;    ..\Drivers\STM32F0xx_HAL_Driver\Inc\Legacy;    ..\Drivers\CMSIS\Include;    ..\Drivers\CMSIS\Device\ST\STM32F0xx\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -436,6 +436,31 @@
               <FileName>main.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Src\main.c</FilePath>
+            </File>
+            <File>
+              <FileName>gpio.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\gpio.c</FilePath>
+            </File>
+            <File>
+              <FileName>tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\tim.c</FilePath>
+            </File>
+            <File>
+              <FileName>i2c.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\i2c.c</FilePath>
+            </File>
+            <File>
+              <FileName>usart.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\usart.c</FilePath>
+            </File>
+            <File>
+              <FileName>spi.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\spi.c</FilePath>
             </File>
           </Files>
         </Group>

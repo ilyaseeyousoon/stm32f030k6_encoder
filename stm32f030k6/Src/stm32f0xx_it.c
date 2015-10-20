@@ -36,8 +36,9 @@
 #include "stm32f0xx_it.h"
 
 /* USER CODE BEGIN 0 */
-extern uint32_t res[250];
-extern uint32_t m;
+extern uint8_t res[250];
+extern uint8_t m;
+ uint32_t gj;
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
@@ -93,24 +94,37 @@ void I2C1_IRQHandler(void)
 */
 void SPI1_IRQHandler(void)
 {
+	if (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE)!=RESET ) {
+				__HAL_SPI_DISABLE_IT(&hspi1, SPI_IT_RXNE);
+//		HAL_SPI_Receive_IT(&hspi1, &res[m], 1);
+		HAL_SPI_Receive(&hspi1, &res[m], 1,10);
+//		res[m] = SPI1->DR; //Читаем то что пришло
+	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1);
+		while(__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_BSY) == SET)	
+		;
+//			 SPI1->DR = m; //отправляем обратно то что приняли
+		HAL_SPI_Transmit(&hspi1, &m,1, 1);
+					m=m+1;
+		
+//	HAL_SPI_IRQHandler(&hspi1);
   /* USER CODE BEGIN SPI1_IRQn 0 */
-	  if(__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE) != RESET) {
-		__HAL_SPI_DISABLE_IT(&hspi1, SPI_FLAG_RXNE);
-		
-			res[m] = SPI1->DR; //Читаем то что пришло
-			m=m+1;
-		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);	
-		for(uint32_t t=0;t<1000000;t++);
-		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
-			
-		}
-		
+//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1);	
+//				for(uint32_t t=0;t<100000000;t++);
   /* USER CODE END SPI1_IRQn 0 */
-		
+//  
   /* USER CODE BEGIN SPI1_IRQn 1 */
-__HAL_SPI_ENABLE_IT(&hspi1, SPI_FLAG_RXNE);
+		
+__HAL_SPI_ENABLE_IT(&hspi1, SPI_IT_RXNE);
+		}
+//		
+		
+//		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);	
+//		for(uint32_t t=0;t<1000000;t++);
+//		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
+	
+		}
   /* USER CODE END SPI1_IRQn 1 */
-}
+
 
 /* USER CODE BEGIN 1 */
 
