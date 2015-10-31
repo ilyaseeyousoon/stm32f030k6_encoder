@@ -34,7 +34,6 @@
 #include "stm32f0xx_hal.h"
 #include "i2c.h"
 #include "spi.h"
-#include "tim.h"
 #include "usart.h"
 #include "gpio.h"
 
@@ -48,6 +47,7 @@
 /* Private variables ---------------------------------------------------------*/
 uint8_t res[250];
 uint8_t m=0;
+extern uint8_t p;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -80,11 +80,13 @@ int main(void)
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
   MX_I2C1_Init();
-  MX_TIM1_Init();
+  MX_SPI1_Init();
   MX_USART1_UART_Init();
-SPI1_Initialize();
-  /* USER CODE BEGIN 2 */
 
+  /* USER CODE BEGIN 2 */
+uint8_t l=0xFF;
+uint8_t u=(HAL_GPIO_ReadPin(GPIOA,  GPIO_PIN_8));
+extern uint8_t Enc_counter1;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -93,13 +95,21 @@ SPI1_Initialize();
 	{
 		
 //__HAL_SPI_DISABLE_IT(&hspi1, SPI_FLAG_RXNE);
-			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
-		for(uint32_t t=0;t<1000000;t++){}
-			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
-		for(uint32_t t=0;t<1000000;t++){}
+//			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
+//		for(uint32_t t=0;t<1000000;t++){}
+//			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+//		for(uint32_t t=0;t<1000000;t++){}
   /* USER CODE END WHILE */
 
   /* USER CODE BEGIN 3 */
+//	 HAL_UART_Transmit( &huart1, &l, 1, 10000);
+//		for(uint32_t t=0;t<1000000;t++){}
+			
+ HAL_UART_Transmit( &huart1, &Enc_counter1, 1, 10000);
+	for(uint32_t t=0;t<1000000;t++){}
+
+//		 HAL_UART_Transmit( &huart1, &u, 1, 10000);
+//	for(uint32_t t=0;t<1000000;t++){}
 
   }
   /* USER CODE END 3 */

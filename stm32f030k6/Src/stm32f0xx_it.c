@@ -33,6 +33,7 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 #include "stm32f0xx.h"
+#include "spi.h"
 #include "stm32f0xx_it.h"
 
 /* USER CODE BEGIN 0 */
@@ -60,7 +61,7 @@ void SysTick_Handler(void)
   HAL_IncTick();
   HAL_SYSTICK_IRQHandler();
   /* USER CODE BEGIN SysTick_IRQn 1 */
-
+Systick_Enc();
   /* USER CODE END SysTick_IRQn 1 */
 }
 
@@ -94,26 +95,11 @@ void I2C1_IRQHandler(void)
 */
 void SPI1_IRQHandler(void)
 {
-//		HAL_SPI_IRQHandler(&hspi1);
-//	if (__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_RXNE)!=RESET ) {
-//				__HAL_SPI_DISABLE_IT(&hspi1, SPI_IT_RXNE);
-//		HAL_SPI_Receive_IT(&hspi1, &res[m], 1);
-//		HAL_SPI_Receive(&hspi1, &res[m], 1,10);
-		res[m] = SPI1->DR; //Читаем то что пришло
-//	HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1);
-//		while(__HAL_SPI_GET_FLAG(&hspi1, SPI_FLAG_BSY) == SET)	
-//		;
-			for(uint32_t t=0;t<100;t++){}
-			 SPI1->DR = 0x3428; //отправляем обратно то что приняли
-//		HAL_SPI_Transmit(&hspi1, &m,1, 1);
-					m=m+1;
-		
-//	HAL_SPI_IRQHandler(&hspi1);
   /* USER CODE BEGIN SPI1_IRQn 0 */
 //HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1);	
 //			
   /* USER CODE END SPI1_IRQn 0 */
-//  
+  HAL_SPI_IRQHandler(&hspi1);
   /* USER CODE BEGIN SPI1_IRQn 1 */
 		
 //__HAL_SPI_ENABLE_IT(&hspi1, SPI_IT_RXNE);

@@ -42,8 +42,9 @@
 #include "stm32f0xx_hal.h"
 
 extern SPI_HandleTypeDef hspi1;
-int32_t SPI1_Initialize(void);
-
+void Systick_Enc(void);
+void MX_SPI1_Init(void);
+uint8_t getEnc_Counter(void);
 #ifdef __cplusplus
 }
 #endif
