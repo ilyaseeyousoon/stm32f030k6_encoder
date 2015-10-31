@@ -96,8 +96,10 @@ void I2C1_IRQHandler(void)
 void SPI1_IRQHandler(void)
 {
   /* USER CODE BEGIN SPI1_IRQn 0 */
-//HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_1);	
-//			
+	res[m] = SPI1->DR; //Читаем то что пришло
+			for(uint32_t t=0;t<100;t++){}
+			 SPI1->DR = 0x3428; //отправляем обратно то что приняли
+				
   /* USER CODE END SPI1_IRQn 0 */
   HAL_SPI_IRQHandler(&hspi1);
   /* USER CODE BEGIN SPI1_IRQn 1 */
