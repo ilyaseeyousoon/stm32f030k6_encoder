@@ -94,14 +94,15 @@ void I2C1_IRQHandler(void)
 * @brief This function handles SPI1 global interrupt.
 */
 void SPI1_IRQHandler(void)
-{
+{	
+//	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_SET);		
   /* USER CODE BEGIN SPI1_IRQn 0 */
 	res[m] = SPI1->DR; //Читаем то что пришло
 			for(uint32_t t=0;t<100;t++){}
 			 SPI1->DR = 0x3428; //отправляем обратно то что приняли
 				
   /* USER CODE END SPI1_IRQn 0 */
-  HAL_SPI_IRQHandler(&hspi1);
+//  HAL_SPI_IRQHandler(&hspi1);
   /* USER CODE BEGIN SPI1_IRQn 1 */
 		
 //__HAL_SPI_ENABLE_IT(&hspi1, SPI_IT_RXNE);

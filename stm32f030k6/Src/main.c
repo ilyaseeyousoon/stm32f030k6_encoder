@@ -48,6 +48,7 @@
 uint8_t res[250];
 uint8_t m=0;
 extern uint8_t p;
+extern uint32_t Enc_counter1,Enc_counter2;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -79,21 +80,59 @@ int main(void)
 
   /* Initialize all configured peripherals */
   MX_GPIO_Init();
+	
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
+		for(uint32_t t=0;t<1000000;t++){}
+			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+		for(uint32_t t=0;t<1000000;t++){}
   MX_I2C1_Init();
+			
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
+		for(uint32_t t=0;t<1000000;t++){}
+			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+		for(uint32_t t=0;t<1000000;t++){}
   MX_SPI1_Init();
+			
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
+		for(uint32_t t=0;t<1000000;t++){}
+			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+		for(uint32_t t=0;t<1000000;t++){}
   MX_USART1_UART_Init();
-
+			
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
+		for(uint32_t t=0;t<1000000;t++){}
+			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+		for(uint32_t t=0;t<1000000;t++){}
+SPI1_Initialize();
+			
+				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
+		for(uint32_t t=0;t<1000000;t++){}
+			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+		for(uint32_t t=0;t<1000000;t++){}
   /* USER CODE BEGIN 2 */
-uint8_t l=0xFF;
-uint8_t u=(HAL_GPIO_ReadPin(GPIOA,  GPIO_PIN_8));
-extern uint8_t Enc_counter1;
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
 	{
-		
+if(	Enc_counter2<Enc_counter1){
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_RESET);	
+
+}
+if(	Enc_counter2>Enc_counter1){
+
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_SET);		
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+}
+if(	Enc_counter2==Enc_counter1){
+
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_RESET);		
+	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+}
+				Enc_counter2=Enc_counter1;
 //__HAL_SPI_DISABLE_IT(&hspi1, SPI_FLAG_RXNE);
 //			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
 //		for(uint32_t t=0;t<1000000;t++){}
@@ -104,13 +143,28 @@ extern uint8_t Enc_counter1;
   /* USER CODE BEGIN 3 */
 //	 HAL_UART_Transmit( &huart1, &l, 1, 10000);
 //		for(uint32_t t=0;t<1000000;t++){}
-			
- HAL_UART_Transmit( &huart1, &Enc_counter1, 1, 10000);
-	for(uint32_t t=0;t<1000000;t++){}
 
+uint8_t q,w,e,r=0;
+q=Enc_counter1>>24;
+w=Enc_counter1>>16;
+e=Enc_counter1>>8;
+r=Enc_counter1;
+
+ HAL_UART_Transmit( &huart1, &q, 1, 10000);
+for(uint32_t t=0;t<1000000;t++){}
+HAL_UART_Transmit( &huart1, &w, 1, 10000);
+for(uint32_t t=0;t<1000000;t++){}
+HAL_UART_Transmit( &huart1, &e, 1, 10000);
+for(uint32_t t=0;t<1000000;t++){}
+HAL_UART_Transmit( &huart1, &r, 1, 10000);
+for(uint32_t t=0;t<1000000;t++){}
 //		 HAL_UART_Transmit( &huart1, &u, 1, 10000);
 //	for(uint32_t t=0;t<1000000;t++){}
 
+//				HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_SET);	
+//		for(uint32_t t=0;t<1000000;t++){}
+//			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_0,GPIO_PIN_RESET);	
+//		for(uint32_t t=0;t<1000000;t++){}
   }
   /* USER CODE END 3 */
 

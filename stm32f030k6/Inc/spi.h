@@ -45,6 +45,7 @@ extern SPI_HandleTypeDef hspi1;
 void Systick_Enc(void);
 void MX_SPI1_Init(void);
 uint8_t getEnc_Counter(void);
+int32_t SPI1_Initialize(void);
 #ifdef __cplusplus
 }
 #endif
