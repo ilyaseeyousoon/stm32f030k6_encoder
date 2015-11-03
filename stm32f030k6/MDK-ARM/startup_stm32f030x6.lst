@@ -361,12 +361,12 @@ ARM Macro Assembler    Page 6
               00000000 
 Command Line: --debug --xref --diag_suppress=9931 --cpu=Cortex-M0 --apcs=interw
 ork --depend="stm32f030k6 configuration\startup_stm32f030x6.d" -o"stm32f030k6 c
-onfiguration\startup_stm32f030x6.o" -ID:\ALL_PROJ\stm32f030k6_programs\stm32f03
-0k6_encoder\stm32f030k6\MDK-ARM\RTE -ID:\2\ARM\PACK\Keil\STM32F0xx_DFP\1.4.0\De
-vice\Include -ID:\2\ARM\CMSIS\Include --predefine="__EVAL SETA 1" --predefine="
-__MICROLIB SETA 1" --predefine="__UVISION_VERSION SETA 515" --predefine="STM32F
-030 SETA 1" --list=startup_stm32f030x6.lst ..\Drivers\CMSIS\Device\ST\STM32F0xx
-\Source\Templates\arm\startup_stm32f030x6.s
+onfiguration\startup_stm32f030x6.o" -I"D:\ןנמדנאללû 02,11\stm32f030k6_encoder-a
+9979e459347207e91774d6c9cd5481f315ccf84\stm32f030k6\MDK-ARM\RTE" -ID:\2\ARM\PAC
+K\Keil\STM32F0xx_DFP\1.4.0\Device\Include -ID:\2\ARM\CMSIS\Include --predefine=
+"__EVAL SETA 1" --predefine="__MICROLIB SETA 1" --predefine="__UVISION_VERSION 
+SETA 515" --predefine="STM32F030 SETA 1" --list=startup_stm32f030x6.lst ..\Driv
+ers\CMSIS\Device\ST\STM32F0xx\Source\Templates\arm\startup_stm32f030x6.s
 
 
 

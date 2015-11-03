@@ -36,8 +36,6 @@
 
 /* USER CODE BEGIN 0 */
 extern SPI_HandleTypeDef hspi1;
-
-
 /* USER CODE END 0 */
 
 /**
@@ -61,8 +59,6 @@ void HAL_MspInit(void)
 }
 
 /* USER CODE BEGIN 1 */
-
-
 
 /* USER CODE END 1 */
 

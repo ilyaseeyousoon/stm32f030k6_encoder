@@ -28,6 +28,8 @@ stm32f030k6 configuration\i2c.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_h
 stm32f030k6 configuration\i2c.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr_ex.h
 stm32f030k6 configuration\i2c.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_spi.h
 stm32f030k6 configuration\i2c.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_spi_ex.h
+stm32f030k6 configuration\i2c.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_tim.h
+stm32f030k6 configuration\i2c.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_tim_ex.h
 stm32f030k6 configuration\i2c.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart.h
 stm32f030k6 configuration\i2c.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart_ex.h
 stm32f030k6 configuration\i2c.o: ..\Inc\gpio.h

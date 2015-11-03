@@ -1,8 +1,8 @@
 /**
   ******************************************************************************
-  * File Name          : I2C.c
+  * File Name          : TIM.c
   * Description        : This file provides code for the configuration
-  *                      of the I2C instances.
+  *                      of the TIM instances.
   ******************************************************************************
   *
   * COPYRIGHT(c) 2015 STMicroelectronics
@@ -33,7 +33,7 @@
   */
 
 /* Includes ------------------------------------------------------------------*/
-#include "i2c.h"
+#include "tim.h"
 
 #include "gpio.h"
 
@@ -41,95 +41,87 @@
 
 /* USER CODE END 0 */
 
-I2C_HandleTypeDef hi2c1;
+TIM_HandleTypeDef htim1;
 
-/* I2C1 init function */
-void MX_I2C1_Init(void)
+/* TIM1 init function */
+void MX_TIM1_Init(void)
 {
+  TIM_Encoder_InitTypeDef sConfig;
+  TIM_MasterConfigTypeDef sMasterConfig;
 
-  hi2c1.Instance = I2C1;
-  hi2c1.Init.Timing = 0x2000090E;
-  hi2c1.Init.OwnAddress1 = 2;
-  hi2c1.Init.AddressingMode = I2C_ADDRESSINGMODE_7BIT;
-  hi2c1.Init.DualAddressMode = I2C_DUALADDRESS_DISABLED;
-  hi2c1.Init.OwnAddress2 = 0;
-  hi2c1.Init.OwnAddress2Masks = I2C_OA2_NOMASK;
-  hi2c1.Init.GeneralCallMode = I2C_GENERALCALL_DISABLED;
-  hi2c1.Init.NoStretchMode = I2C_NOSTRETCH_DISABLED;
-  HAL_I2C_Init(&hi2c1);
+  htim1.Instance = TIM1;
+  htim1.Init.Prescaler = 0;
+  htim1.Init.CounterMode = TIM_COUNTERMODE_UP;
+  htim1.Init.Period = 0;
+  htim1.Init.ClockDivision = TIM_CLOCKDIVISION_DIV1;
+  htim1.Init.RepetitionCounter = 0;
+  sConfig.EncoderMode = TIM_ENCODERMODE_TI1;
+  sConfig.IC1Polarity = TIM_ICPOLARITY_RISING;
+  sConfig.IC1Selection = TIM_ICSELECTION_DIRECTTI;
+  sConfig.IC1Prescaler = TIM_ICPSC_DIV1;
+  sConfig.IC1Filter = 0;
+  sConfig.IC2Polarity = TIM_ICPOLARITY_RISING;
+  sConfig.IC2Selection = TIM_ICSELECTION_DIRECTTI;
+  sConfig.IC2Prescaler = TIM_ICPSC_DIV1;
+  sConfig.IC2Filter = 0;
+  HAL_TIM_Encoder_Init(&htim1, &sConfig);
 
-    /**Configure Analogue filter 
-    */
-  HAL_I2CEx_AnalogFilter_Config(&hi2c1, I2C_ANALOGFILTER_ENABLED);
+  sMasterConfig.MasterOutputTrigger = TIM_TRGO_RESET;
+  sMasterConfig.MasterSlaveMode = TIM_MASTERSLAVEMODE_DISABLE;
+  HAL_TIMEx_MasterConfigSynchronization(&htim1, &sMasterConfig);
 
 }
 
-void HAL_I2C_MspInit(I2C_HandleTypeDef* hi2c)
+void HAL_TIM_Encoder_MspInit(TIM_HandleTypeDef* htim_encoder)
 {
 
   GPIO_InitTypeDef GPIO_InitStruct;
-  if(hi2c->Instance==I2C1)
+  if(htim_encoder->Instance==TIM1)
   {
-  /* USER CODE BEGIN I2C1_MspInit 0 */
+  /* USER CODE BEGIN TIM1_MspInit 0 */
 
-  /* USER CODE END I2C1_MspInit 0 */
+  /* USER CODE END TIM1_MspInit 0 */
+    /* Peripheral clock enable */
+    __TIM1_CLK_ENABLE();
   
-    /**I2C1 GPIO Configuration    
-    PA10     ------> I2C1_SDA
-    PB6     ------> I2C1_SCL 
+    /**TIM1 GPIO Configuration    
+    PA8     ------> TIM1_CH1
+    PA9     ------> TIM1_CH2 
     */
-    GPIO_InitStruct.Pin = GPIO_PIN_10;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF4_I2C1;
+    GPIO_InitStruct.Pin = GPIO_PIN_8|GPIO_PIN_9;
+    GPIO_InitStruct.Mode = GPIO_MODE_AF_PP;
+    GPIO_InitStruct.Pull = GPIO_NOPULL;
+    GPIO_InitStruct.Speed = GPIO_SPEED_LOW;
+    GPIO_InitStruct.Alternate = GPIO_AF2_TIM1;
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
-    GPIO_InitStruct.Pin = GPIO_PIN_6;
-    GPIO_InitStruct.Mode = GPIO_MODE_AF_OD;
-    GPIO_InitStruct.Pull = GPIO_PULLUP;
-    GPIO_InitStruct.Speed = GPIO_SPEED_HIGH;
-    GPIO_InitStruct.Alternate = GPIO_AF1_I2C1;
-    HAL_GPIO_Init(GPIOB, &GPIO_InitStruct);
+  /* USER CODE BEGIN TIM1_MspInit 1 */
 
-    /* Peripheral clock enable */
-    __I2C1_CLK_ENABLE();
-
-    /* Peripheral interrupt init*/
-    HAL_NVIC_SetPriority(I2C1_IRQn, 3, 0);
-    HAL_NVIC_EnableIRQ(I2C1_IRQn);
-  /* USER CODE BEGIN I2C1_MspInit 1 */
-
-  /* USER CODE END I2C1_MspInit 1 */
+  /* USER CODE END TIM1_MspInit 1 */
   }
 }
 
-void HAL_I2C_MspDeInit(I2C_HandleTypeDef* hi2c)
+void HAL_TIM_Encoder_MspDeInit(TIM_HandleTypeDef* htim_encoder)
 {
 
-  if(hi2c->Instance==I2C1)
+  if(htim_encoder->Instance==TIM1)
   {
-  /* USER CODE BEGIN I2C1_MspDeInit 0 */
+  /* USER CODE BEGIN TIM1_MspDeInit 0 */
 
-  /* USER CODE END I2C1_MspDeInit 0 */
+  /* USER CODE END TIM1_MspDeInit 0 */
     /* Peripheral clock disable */
-    __I2C1_CLK_DISABLE();
+    __TIM1_CLK_DISABLE();
   
-    /**I2C1 GPIO Configuration    
-    PA10     ------> I2C1_SDA
-    PB6     ------> I2C1_SCL 
+    /**TIM1 GPIO Configuration    
+    PA8     ------> TIM1_CH1
+    PA9     ------> TIM1_CH2 
     */
-    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_10);
-
-    HAL_GPIO_DeInit(GPIOB, GPIO_PIN_6);
-
-    /* Peripheral interrupt Deinit*/
-    HAL_NVIC_DisableIRQ(I2C1_IRQn);
+    HAL_GPIO_DeInit(GPIOA, GPIO_PIN_8|GPIO_PIN_9);
 
   }
-  /* USER CODE BEGIN I2C1_MspDeInit 1 */
+  /* USER CODE BEGIN TIM1_MspDeInit 1 */
 
-  /* USER CODE END I2C1_MspDeInit 1 */
+  /* USER CODE END TIM1_MspDeInit 1 */
 } 
 
 /* USER CODE BEGIN 1 */
