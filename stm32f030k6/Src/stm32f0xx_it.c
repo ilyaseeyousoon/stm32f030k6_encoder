@@ -105,7 +105,7 @@ void SPI1_IRQHandler(void)
 //		;
 			for(uint32_t t=0;t<100;t++){}
 
-				SPI1->DR = (0x0000+res[1]); //отправляем обратно то что приняли
+				SPI1->DR = (0x0000+0x0078); //отправляем обратно то что приняли
 //		HAL_SPI_Transmit(&hspi1, &m,1, 1);
 					m=m+1;
 		

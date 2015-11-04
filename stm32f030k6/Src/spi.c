@@ -55,7 +55,8 @@ int32_t SPI1_Initialize (void) {
 	GPIO_InitTypeDef GPIO_InitStruct;
   
 	/* GPIO Ports Clock Enable */
-
+	HAL_SPI_MspDeInit(&hspi1);
+	
 	__GPIOA_CLK_ENABLE();
    /**SPI1 GPIO Configuration    
     PA4     ------> SPI1_NSS
@@ -82,7 +83,7 @@ int32_t SPI1_Initialize (void) {
 	/* SPI1 Clock Enable */
   __SPI1_CLK_ENABLE();
 	
-	HAL_SPI_MspDeInit(&hspi1);
+
 	/* Configure SPI Init */      
   SPI_InitStruct.Mode = SPI_MODE_SLAVE;
 	SPI_InitStruct.Direction = SPI_DIRECTION_2LINES; /* default */
@@ -112,7 +113,7 @@ int32_t SPI1_Initialize (void) {
 	HAL_SPI_Init(&hspi1);
 	
 	  /* Peripheral interrupt init*/
-   HAL_NVIC_SetPriority(SPI1_IRQn, 2, 0);
+   HAL_NVIC_SetPriority(SPI1_IRQn, 1, 0);
 		__HAL_SPI_ENABLE_IT(&hspi1, SPI_IT_RXNE);
     HAL_NVIC_EnableIRQ(SPI1_IRQn);
 		HAL_SPI_Receive_IT(&hspi1, &l,  1);
