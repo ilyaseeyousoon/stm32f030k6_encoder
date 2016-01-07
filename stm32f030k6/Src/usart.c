@@ -38,7 +38,9 @@
 #include "gpio.h"
 
 /* USER CODE BEGIN 0 */
-
+/* Buffers */
+uint8_t UART_tx_buf[8];
+uint8_t UART_rx_buf[8];
 /* USER CODE END 0 */
 
 UART_HandleTypeDef huart1;
@@ -69,7 +71,7 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
   if(huart->Instance==USART1)
   {
   /* USER CODE BEGIN USART1_MspInit 0 */
-
+	UART_InitTypeDef UART_InitStruct;
   /* USER CODE END USART1_MspInit 0 */
     /* Peripheral clock enable */
     __USART1_CLK_ENABLE();
@@ -86,7 +88,8 @@ void HAL_UART_MspInit(UART_HandleTypeDef* huart)
     HAL_GPIO_Init(GPIOA, &GPIO_InitStruct);
 
   /* USER CODE BEGIN USART1_MspInit 1 */
-
+ /* Configure USART Handler */	  
+	
   /* USER CODE END USART1_MspInit 1 */
   }
 }

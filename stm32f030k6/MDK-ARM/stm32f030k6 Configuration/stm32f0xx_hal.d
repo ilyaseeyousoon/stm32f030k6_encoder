@@ -27,7 +27,5 @@ stm32f030k6 configuration\stm32f0xx_hal.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\s
 stm32f030k6 configuration\stm32f0xx_hal.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_pwr_ex.h
 stm32f030k6 configuration\stm32f0xx_hal.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_spi.h
 stm32f030k6 configuration\stm32f0xx_hal.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_spi_ex.h
-stm32f030k6 configuration\stm32f0xx_hal.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_tim.h
-stm32f030k6 configuration\stm32f0xx_hal.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_tim_ex.h
 stm32f030k6 configuration\stm32f0xx_hal.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart.h
 stm32f030k6 configuration\stm32f0xx_hal.o: ..\Drivers\STM32F0xx_HAL_Driver\Inc\stm32f0xx_hal_uart_ex.h

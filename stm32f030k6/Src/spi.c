@@ -43,12 +43,30 @@ uint8_t receiveBuffer[32];
 uint8_t SPI_tx_buf[32];
 uint8_t SPI_rx_buf[32];
 extern uint8_t m;
- uint8_t l;
+ uint8_t l,p;
+ SPI_InitTypeDef SPI_InitStruct;
+#define Read_Enc_A			HAL_GPIO_ReadPin(GPIOA,  GPIO_PIN_9)
+#define Read_Enc_B			HAL_GPIO_ReadPin(GPIOA,  GPIO_PIN_10)
+#define	ENC_MAX					3
+uint32_t Enc_counter=0xFFFF;
+uint16_t Enc_counter1,Enc_counter2=0;
+uint8_t Enc_Mode=0;
+uint8_t Enc_A_count=0;
+uint8_t Enc_A_state=0;
+uint8_t Enc_B_count=0;
+uint8_t Enc_B_state=0;
 /* USER CODE END 0 */
 
 SPI_HandleTypeDef hspi1;
 
 /* SPI1 init function */
+void MX_SPI1_Init(void)
+{
+
+ 
+
+}
+
 int32_t SPI1_Initialize (void) {
   
 	SPI_InitTypeDef SPI_InitStruct;
@@ -82,7 +100,7 @@ int32_t SPI1_Initialize (void) {
 	/* SPI1 Clock Enable */
   __SPI1_CLK_ENABLE();
 	
-	HAL_SPI_MspDeInit(&hspi1);
+//	HAL_SPI_MspDeInit(&hspi1);
 	/* Configure SPI Init */      
   SPI_InitStruct.Mode = SPI_MODE_SLAVE;
 	SPI_InitStruct.Direction = SPI_DIRECTION_2LINES; /* default */
@@ -112,17 +130,13 @@ int32_t SPI1_Initialize (void) {
 	HAL_SPI_Init(&hspi1);
 	
 	  /* Peripheral interrupt init*/
-   HAL_NVIC_SetPriority(SPI1_IRQn, 2, 0);
+   HAL_NVIC_SetPriority(SPI1_IRQn, 1, 0);
 		__HAL_SPI_ENABLE_IT(&hspi1, SPI_IT_RXNE);
     HAL_NVIC_EnableIRQ(SPI1_IRQn);
 		HAL_SPI_Receive_IT(&hspi1, &l,  1);
 		
   return 0;
 }
-
-
-
-
 
 void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
 {
@@ -153,6 +167,88 @@ void HAL_SPI_MspDeInit(SPI_HandleTypeDef* hspi)
 } 
 
 /* USER CODE BEGIN 1 */
+void Systick_Enc(void)
+{
+	if (Read_Enc_A == 1)
+	{
+		if (Enc_A_count < ENC_MAX)
+		{
+			Enc_A_count++;
+		} else {
+			if (Enc_A_state == 0)
+			{
+				if (Enc_Mode == 0)
+				{
+					Enc_Mode = 1;
+					Enc_counter++;
+				} else {
+					Enc_Mode = 0;
+					Enc_counter--;
+				}
+			}
+			Enc_A_state = 1;
+		}
+	} else {
+		if (Enc_A_count > 0)
+		{
+			Enc_A_count--;
+		} else {
+			if (Enc_A_state == 1)	
+			{
+				if (Enc_Mode == 0)
+				{
+					Enc_Mode = 1;
+					Enc_counter++;
+				} else {
+					Enc_Mode = 0;
+					Enc_counter--;
+				}
+			}
+			Enc_A_state = 0;
+		}
+	}
+	
+	if (Read_Enc_B == 1)
+	{
+		if (Enc_B_count < ENC_MAX)
+		{
+			Enc_B_count++;
+		} else {
+			if (Enc_B_state == 0)
+			{
+				if (Enc_Mode == 0)
+				{
+					Enc_Mode = 1;
+					Enc_counter--;
+				} else {
+					Enc_Mode = 0;
+					Enc_counter++;
+				}
+			}
+			Enc_B_state = 1;
+		}
+	} else {
+		if (Enc_B_count > 0)
+		{
+			Enc_B_count--;
+		} else {
+			if (Enc_B_state == 1)	
+			{
+				if (Enc_Mode == 0)
+				{
+					Enc_Mode = 1;
+					Enc_counter--;
+				} else {
+					Enc_Mode = 0;
+					Enc_counter++;
+				}
+			}
+			Enc_B_state = 0;
+		}
+	}
+	Enc_counter1=Enc_counter/4;
+}
+
 
 /* USER CODE END 1 */
 
