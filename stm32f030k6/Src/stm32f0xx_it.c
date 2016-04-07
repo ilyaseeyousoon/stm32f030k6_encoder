@@ -33,20 +33,20 @@
 /* Includes ------------------------------------------------------------------*/
 #include "stm32f0xx_hal.h"
 #include "stm32f0xx.h"
-#include "spi.h"
 #include "stm32f0xx_it.h"
 
 /* USER CODE BEGIN 0 */
-extern uint8_t res[250];
-extern uint8_t m;
- uint32_t gj;
- extern uint32_t Enc_counter1,Enc_counter2;
+
 /* USER CODE END 0 */
 
 /* External variables --------------------------------------------------------*/
 extern I2C_HandleTypeDef hi2c1;
 extern SPI_HandleTypeDef hspi1;
-
+extern TIM_HandleTypeDef htim1;
+extern UART_HandleTypeDef huart1;
+extern uint16_t hTxNumData;
+extern uint8_t m;
+extern uint16_t Enc_counter1,Enc_counter2;
 /******************************************************************************/
 /*            Cortex-M0 Processor Interruption and Exception Handlers         */ 
 /******************************************************************************/
@@ -74,17 +74,34 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /**
+* @brief This function handles TIM1 break, update, trigger and commutation interrupts.
+*/
+void TIM1_BRK_UP_TRG_COM_IRQHandler(void)
+{
+  /* USER CODE BEGIN TIM1_BRK_UP_TRG_COM_IRQn 0 */
+
+  /* USER CODE END TIM1_BRK_UP_TRG_COM_IRQn 0 */
+  HAL_TIM_IRQHandler(&htim1);
+  /* USER CODE BEGIN TIM1_BRK_UP_TRG_COM_IRQn 1 */
+
+  /* USER CODE END TIM1_BRK_UP_TRG_COM_IRQn 1 */
+}
+
+/**
 * @brief This function handles I2C1 global interrupt.
 */
 void I2C1_IRQHandler(void)
 {
+		m=m+1;;
   /* USER CODE BEGIN I2C1_IRQn 0 */
 
   /* USER CODE END I2C1_IRQn 0 */
   if (hi2c1.Instance->ISR & (I2C_FLAG_BERR | I2C_FLAG_ARLO | I2C_FLAG_OVR)) {
     HAL_I2C_ER_IRQHandler(&hi2c1);
+		HAL_I2C_Slave_Transmit_IT(&hi2c1, (uint8_t*)&Enc_counter2, 2);
   } else {
     HAL_I2C_EV_IRQHandler(&hi2c1);
+		HAL_I2C_Slave_Transmit_IT(&hi2c1, (uint8_t*)&Enc_counter2, 2);
   }
   /* USER CODE BEGIN I2C1_IRQn 1 */
 
@@ -95,32 +112,29 @@ void I2C1_IRQHandler(void)
 * @brief This function handles SPI1 global interrupt.
 */
 void SPI1_IRQHandler(void)
-{	
-//	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_SET);		
+{
   /* USER CODE BEGIN SPI1_IRQn 0 */
-	res[m] = SPI1->DR; //Читаем то что пришло
-		for(uint32_t t=0;t<100;t++){}
-			 SPI1->DR =Enc_counter2; //отправляем обратно то что приняли
-//			SPI1->DR =Enc_counter2; //отправляем обратно то что приняли
-				
-  /* USER CODE END SPI1_IRQn 0 */
-//  HAL_SPI_IRQHandler(&hspi1);
-  /* USER CODE BEGIN SPI1_IRQn 1 */
-		
-//__HAL_SPI_ENABLE_IT(&hspi1, SPI_IT_RXNE);
-//	HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_SET);	
-//		for(uint32_t t=0;t<1000000;t++){}
-//			HAL_GPIO_WritePin(GPIOB,GPIO_PIN_1,GPIO_PIN_RESET);
-		}
-//		
-		
-//		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);	
-//		for(uint32_t t=0;t<1000000;t++);
-//		HAL_GPIO_TogglePin(GPIOB,GPIO_PIN_0);
-	
-		//}
-  /* USER CODE END SPI1_IRQn 1 */
 
+  /* USER CODE END SPI1_IRQn 0 */
+  HAL_SPI_IRQHandler(&hspi1);
+  /* USER CODE BEGIN SPI1_IRQn 1 */
+
+  /* USER CODE END SPI1_IRQn 1 */
+}
+
+/**
+* @brief This function handles USART1 global interrupt.
+*/
+void USART1_IRQHandler(void)
+{
+  /* USER CODE BEGIN USART1_IRQn 0 */
+
+  /* USER CODE END USART1_IRQn 0 */
+  HAL_UART_IRQHandler(&huart1);
+  /* USER CODE BEGIN USART1_IRQn 1 */
+
+  /* USER CODE END USART1_IRQn 1 */
+}
 
 /* USER CODE BEGIN 1 */
 

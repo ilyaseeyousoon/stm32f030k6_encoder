@@ -10,6 +10,7 @@
       <TargetName>stm32f030k6 Configuration</TargetName>
       <ToolsetNumber>0x4</ToolsetNumber>
       <ToolsetName>ARM-ADS</ToolsetName>
+      <pCCUsed>5060061::V5.06 update 1 (build 61)::ARMCC</pCCUsed>
       <TargetOption>
         <TargetCommonOption>
           <Device>STM32F030K6</Device>
@@ -50,7 +51,7 @@
           <OutputName>stm32f030k6 Configuration</OutputName>
           <CreateExecutable>1</CreateExecutable>
           <CreateLib>0</CreateLib>
-          <CreateHexFile>1</CreateHexFile>
+          <CreateHexFile>0</CreateHexFile>
           <DebugInformation>1</DebugInformation>
           <BrowseInformation>1</BrowseInformation>
           <ListingPath></ListingPath>
@@ -173,7 +174,7 @@
             <RunIndependent>0</RunIndependent>
             <UpdateFlashBeforeDebugging>1</UpdateFlashBeforeDebugging>
             <Capability>1</Capability>
-            <DriverSelection>4103</DriverSelection>
+            <DriverSelection>4107</DriverSelection>
           </Flash1>
           <bUseTDR>1</bUseTDR>
           <Flash2>STLink\ST-LINKIII-KEIL_SWO.dll</Flash2>
@@ -229,6 +230,7 @@
             <useUlib>1</useUlib>
             <EndSel>0</EndSel>
             <uLtcg>0</uLtcg>
+            <nSecure>0</nSecure>
             <RoSelD>3</RoSelD>
             <RwSelD>3</RwSelD>
             <CodeSel>0</CodeSel>
@@ -365,11 +367,13 @@
             <useXO>0</useXO>
             <v6Lang>0</v6Lang>
             <v6LangP>0</v6LangP>
+            <vShortEn>0</vShortEn>
+            <vShortWch>0</vShortWch>
             <VariousControls>
               <MiscControls>--C99</MiscControls>
               <Define>USE_HAL_DRIVER,STM32F030x6</Define>
               <Undefine></Undefine>
-              <IncludePath>..\Inc;     ..\Drivers\STM32F0xx_HAL_Driver\Inc;     ..\Drivers\STM32F0xx_HAL_Driver\Inc\Legacy;     ..\Drivers\CMSIS\Include;     ..\Drivers\CMSIS\Device\ST\STM32F0xx\Include</IncludePath>
+              <IncludePath>..\Inc;..\Drivers\STM32F0xx_HAL_Driver\Inc;..\Drivers\STM32F0xx_HAL_Driver\Inc\Legacy;..\Drivers\CMSIS\Include;..\Drivers\CMSIS\Device\ST\STM32F0xx\Include</IncludePath>
             </VariousControls>
           </Cads>
           <Aads>
@@ -437,26 +441,6 @@
               <FileType>1</FileType>
               <FilePath>..\Src\main.c</FilePath>
             </File>
-            <File>
-              <FileName>gpio.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Src\gpio.c</FilePath>
-            </File>
-            <File>
-              <FileName>i2c.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Src\i2c.c</FilePath>
-            </File>
-            <File>
-              <FileName>usart.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Src\usart.c</FilePath>
-            </File>
-            <File>
-              <FileName>spi.c</FileName>
-              <FileType>1</FileType>
-              <FilePath>..\Src\spi.c</FilePath>
-            </File>
           </Files>
         </Group>
         <Group>
@@ -486,6 +470,11 @@
               <FileName>stm32f0xx_hal_uart_ex.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_uart_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f0xx_hal_tim.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_pwr_ex.c</FileName>
@@ -521,6 +510,11 @@
               <FileName>stm32f0xx_hal_flash_ex.c</FileName>
               <FileType>1</FileType>
               <FilePath>..\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_flash_ex.c</FilePath>
+            </File>
+            <File>
+              <FileName>stm32f0xx_hal_tim_ex.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Drivers\STM32F0xx_HAL_Driver\Src\stm32f0xx_hal_tim_ex.c</FilePath>
             </File>
             <File>
               <FileName>stm32f0xx_hal_uart.c</FileName>
